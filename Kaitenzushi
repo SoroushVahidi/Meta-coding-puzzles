@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+#include <set>
+using namespace std;
+// Write any include statements here
+
+
+int getMaximumEatenDishCount(int N, vector<int> D, int K) {
+  // Write your code here
+  set<int> dishes;
+  vector<int> eaten;
+  int ans=0;
+  for(int i=0;i<N;i++){
+    if(dishes.find(D[i])==dishes.end()){
+      cerr<<D[i]<<endl;
+      ans++;
+      dishes.insert(D[i]);
+      eaten.push_back(D[i]);
+      if(eaten.size()>K){
+        auto itr = dishes.find(eaten[eaten.size()-K-1]);
+        cerr<<*itr<<endl;
+        dishes.erase(itr);
+
+      }
+    }
+  }
+  return ans;
+}
