@@ -1,0 +1,75 @@
+#include <iostream>
+
+#include <bits/stdc++.h>
+#include <set>
+using namespace std;
+// Write any include statements here
+
+
+
+int getArtisticPhotographCount(int N, string C, int X, int Y) {
+ set<int> a;
+  set<int> b;
+  set<int> p;
+  int x=X;
+  int y=Y;
+  for(int i=0;i<N;i++){
+    if(C[i]=='A')
+      a.insert(i);
+    if(C[i]=='B')
+      b.insert(i);
+    if(C[i]=='P')
+      p.insert(i);
+  }
+  if(p.size()==0)
+    return 0;
+  if(b.size()==0)
+    return 0;
+  if(a.size()==0)
+    return 0;
+  int ans=0;
+  set<int>::iterator it=a.begin();
+  while(it!=a.end()){
+    
+    int lefb;
+    int lefp;
+    int rightb;
+    int rightp;
+    int pl=*it;
+    cerr<<pl<<endl;
+    set<int>::iterator it1=b.lower_bound(pl-y);
+    cerr<<"it1 "<<*it1<<endl;
+    set<int>::iterator it2=b.upper_bound(pl-x);
+    --it2;
+    cerr<<"it2 "<<*it2<<endl;
+    set<int>::iterator it3=b.lower_bound(pl+x);
+    cerr<<"it3 "<<*it3<<endl;
+    set<int>::iterator it4=b.upper_bound(pl+y);
+    --it4;
+    cerr<<"it4 "<<*it4<<endl;
+    
+    set<int>::iterator it5=p.lower_bound(pl-y);
+    cerr<<"it5"<<' '<<*it5<<endl;
+    
+    set<int>::iterator it6=p.upper_bound(pl-x);
+    --it6;
+    cerr<<"it6 "<<*it6<<endl;
+    set<int>::iterator it7=p.lower_bound(pl+x);
+    cerr<<"it7 "<<*it7<<endl;
+    set<int>::iterator it8=p.upper_bound(pl+y);
+    --it8;
+    cerr<<"it8 "<<*it8<<endl;
+    
+    if(it1!=b.end()&& it2!=b.end() && it7!=p.end() && it8!=p.end() && *it7<=*it8 && *it1<=*it2 && *it2<=pl && *it8>=pl){
+      ans=ans+(distance(it1,it2)+1)*(distance(it7,it8)+1);
+    }
+    cerr<<"firstif"<<endl;
+    if(it3!=b.end()&& it4!=b.end() && it5!=p.end() && it6!=p.end() && *it3<=*it4 && *it5<=*it6 && *it6<=pl && *it4>=pl){
+      cerr<<"insidesecondif"<<endl;
+      ans=ans+(distance(it3,it4)+1)*(distance(it5,it6)+1);
+    }
+    cerr<<"secondif"<<endl;
+    it++;
+  }
+  return ans;
+}
