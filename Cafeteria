@@ -1,0 +1,18 @@
+from typing import List
+import math
+# Write any import statements here
+
+def getMaxAdditionalDinersCount(N: int, K: int, M: int, S: List[int]) -> int:
+  # Write your code here
+  ans=0
+  k=K
+  S=sorted(S)
+  n=N
+  ans=ans+math.ceil(max((S[0]-k-1),0)/(k+1))
+#  print(ans)
+  for i in range(1,M):
+    ans=ans+math.ceil(max(S[i]-S[i-1]-2*k-1,0)/(k+1))
+ #   print(ans)
+  ans=ans+math.ceil(max((n-S[M-1]-k),0)/(k+1))
+#  print(ans)
+  return ans
