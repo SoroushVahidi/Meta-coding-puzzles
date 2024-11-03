@@ -1,0 +1,11 @@
+
+def getWrongAnswers(N: int, C: str) -> str:
+  # Write your code here
+  s=""
+  for i in range(N):
+    if(C[i]=='A'):
+      s=s+'B'
+    else:
+      s=s+'A'
+  
+  return s
