@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+#include<algorithm>
+using namespace std;
+// Write any include statements here
+
+long long getSecondsRequired(long long N, int F, vector<long long> P) {
+  // Write your code here
+  sort(P.begin(),P.end());
+  long long ans=0;
+  for(int i=0;i<F-1;i++){
+    ans=ans+P[i+1]-i-(P[i]-(i-1));
+    P[i]=P[i+1]-1;
+  }
+  ans+=N-(P[F-1]-F+1);
+  return ans;
+}
