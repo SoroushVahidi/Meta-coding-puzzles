@@ -1,0 +1,90 @@
+#include <bits/stdc++.h>
+#include <vector>
+using namespace std;
+// Write any include statements here
+
+long long getArtisticPhotographCount(int N, string C, int X, int Y) {
+  // Write your code here
+  vector<long long> a;
+  vector<long long> b;
+  vector<long long> p;
+  long long x=X;
+  long long y=Y;
+  for(int i=0;i<N;i++){
+    if(C[i]=='A')
+      a.push_back(i);
+    if(C[i]=='B')
+      b.push_back(i);
+    if(C[i]=='P')
+      p.push_back(i);
+  }
+  if(a.size()==0)
+    return 0;
+  if(b.size()==0)
+    return 0;
+  if(p.size()==0)
+    return 0;
+  long long ans=0;
+  vector<long long>::iterator it=a.begin();
+  vector<long long>::iterator it1=b.begin();
+  vector<long long>::iterator it2=b.begin();
+   vector<long long>::iterator it7=p.begin();
+  vector<long long>::iterator it8=p.begin();
+  vector<long long>::iterator it3=b.begin();
+  vector<long long>::iterator it4=b.begin();
+   vector<long long>::iterator it5=p.begin();
+  vector<long long>::iterator it6=p.begin();
+  while(it!=a.end()){
+    
+
+    int pl=*it;
+    cerr<<pl<<endl;
+    while((it1+1!=b.end()) && *(it1)<pl-y)
+      it1++;
+    while((it2+1!=b.end())&&(*(it2+1)<=pl-x))
+      it2++;
+
+    
+    if(*it1<=*it2 && *it2<=pl-x && *it1>=pl-y ){
+      
+      while(((it7+1)!=p.end())&&(*(it7)<pl+x))
+        it7++;
+      cerr<<"it7 "<<*it7<<endl;
+      while((it8+1!=p.end())&&(*(it8+1)<=pl+y))
+        it8++;
+
+      if(  *it7>=pl+x && *it8<=pl+y && *it7<=*it8)
+        ans=ans+(distance(it1,it2)+1)*(distance(it7,it8)+1);
+    
+      
+    }
+    
+    
+    while((it3+1!=b.end()) && *(it3)<pl+x)
+      it3++;
+    cerr<<"it3 "<<*it3<<endl;
+    while((it4+1!=b.end())&&(*(it4+1)<=pl+y))
+        it4++;
+    cerr<<"it4 "<<*it4<<endl;
+    if( *it4>=*it3 && *it3>=pl+x && *it4<=pl+y){
+      
+    
+      while((it5+1!=p.end()) && *(it5)<pl-y)
+        it5++;
+    
+      while((it6+1!=p.end())&&(*(it6+1)<=pl-x))
+        it6++;
+      cerr<<"it6 "<<*it6<<endl;
+      if( *it5<=*it6 && *it6<=pl-x && *it5>=pl-y){
+       cerr<<"insidesecondif"<<endl;
+        ans=ans+(distance(it3,it4)+1)*(distance(it5,it6)+1);
+      }
+    }
+    
+    
+
+    it++;
+  }
+  return ans;
+
+}
