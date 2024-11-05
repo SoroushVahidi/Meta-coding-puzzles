@@ -1,0 +1,58 @@
+
+
+from typing import List
+
+
+
+# Write any import statements here
+
+def getMaxVisitableWebpages(N: int, L: List[int]) -> int:
+  # Write your code here
+  
+  depth=[0]*(N)
+  enteredin=[False]*(N)
+  for i in range(N):
+    L[i]=L[i]-1
+    enteredin[L[i]]=True
+  notentered=[]
+  for i in range(N):
+    if(enteredin[i]==False):
+      notentered.append(i)
+  if(len(notentered)==0):
+    seen=[0]*(N+1)
+    ans=0
+    for i in range(N):
+      if(seen[i]==False):
+        ted=0
+        vert=i
+        while(seen[vert]==False):
+          ted=ted+1
+          seen[vert]=True
+          vert=L[vert]
+        ans=max(ans,ted)
+    return ans 
+  else:
+    depth=[0]*(N)
+    seen=[-1]*(N)
+    for i in range(len(notentered)):
+      v=notentered[i]
+      vert=notentered[i]
+      lst=[]
+      while(seen[vert]==-1):
+        lst.append(vert)
+        seen[vert]=i+1
+        vert=L[vert]
+      if(seen[vert]==i+1):
+        u=lst.index(vert)
+        for j in range(u,len(lst)):
+          depth[lst[j]]=len(lst)-u
+        for j in reversed(range(0,u)):
+          depth[lst[j]]=depth[lst[j+1]]+1
+      else:
+        for j in range(len(lst)):
+            depth[lst[j]]=depth[vert]+len(lst)-j
+  
+  
+   
+
+    return max(depth)
