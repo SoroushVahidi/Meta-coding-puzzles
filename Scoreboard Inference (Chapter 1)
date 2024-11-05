@@ -1,0 +1,12 @@
+from typing import List
+import math
+# Write any import statements here
+
+def getMinProblemCount(N: int, S: List[int]) -> int:
+  S=sorted(S)
+  od=0
+  for i in range(N):
+    if(S[i]%2==1):
+      od=1
+      break
+  return od+math.floor(S[N-1]/2)
