@@ -1,0 +1,29 @@
+from typing import List
+# Write any import statements here
+
+def getSecondsElapsed(C: int, N: int, A: List[int], B: List[int], K: int) -> int:
+  # Write your code here
+  A=sorted(A)
+  B=sorted(B)
+  tun_long=[0]*N
+  for i in range(N):
+    tun_long[i]=B[i]-A[i]
+  sum_long=[0]*N
+  sum_long[0]=tun_long[0]
+  for i in range(1,N):
+    sum_long[i]=sum_long[i-1]+tun_long[i]
+  ans=(int)(C*(int)((K/(sum_long[N-1]))))
+  print(ans)
+  K=K%sum_long[N-1]
+  if(K==0):
+    K=sum_long[N-1]
+    ans=ans-C
+  j=0
+  while(sum_long[j]<K):
+    j=j+1
+  if j==0:
+    ans=ans+A[0]+K
+  else:
+    ans=ans+A[j]+K-sum_long[j-1]
+  return ans
+  
