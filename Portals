@@ -1,0 +1,50 @@
+from typing import List
+# Write any import statements here
+
+def getSecondsRequired(R: int, C: int, G: List[List[str]]) -> int:
+  # Write your code here
+  same=[[]for i in range(26)]
+  adlist=[[] for i in range(R*C)]
+  spoint=0
+  bflist=[]
+  
+  for i in range(R):
+    for j in range(C):
+      if(ord(G[i][j][0])>=ord('a') and ord(G[i][j][0])<=ord('z')):
+        same[ord(G[i][j][0])-ord('a')].append(i*C+j)
+      if(G[i][j][0]=='S'):
+        spoint=i*C+j
+      if(G[i][j][0]=='#'):
+        continue
+      if(i>0):
+        adlist[i*C+j].append((i-1)*C+j)
+      if(i<R-1):
+        adlist[i*C+j].append((i+1)*C+j)
+      if(j>0):
+        adlist[i*C+j].append(i*C+j-1)
+      if(j<C-1):
+        adlist[i*C+j].append(i*C+j+1)
+        
+  for i in range(26):
+    for j in range(len(same[i])):
+      for l in range(j+1,len(same[i])):
+        adlist[same[i][j]].append(same[i][l])
+        adlist[same[i][l]].append(same[i][j])
+  dist=[-1]*2500
+  dist[spoint]=0
+  bflist.append(spoint)
+  iter=0
+  while(iter<len(bflist)):
+    vert=bflist[iter]
+    for i in range(len(adlist[vert])):
+      x=adlist[vert][i]
+      if(dist[x]!=-1):
+        continue
+      dist[x]=dist[vert]+1
+      if(G[int(x/C)][x%C][0]=='E'):
+        return dist[x]
+      bflist.append(x)
+    iter=iter+1
+  return -1
+    
+
