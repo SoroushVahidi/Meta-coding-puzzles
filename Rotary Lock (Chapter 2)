@@ -1,0 +1,31 @@
+from typing import List
+# Write any import statements here
+
+def getMinCodeEntryTime(N: int, M: int, C: List[int]) -> int:
+  dp=[[0]*(M+2)for i in range(M+2)]
+  C.insert(0,1)
+  dp[0][0]=0
+  dp[1][0]=min(abs(C[1]-1),abs(N-abs(C[1]-1)))
+  for i in range(2,M+1):
+    dp[i][0]=dp[i-1][0]+min(abs(C[i]-C[i-1]),abs(N-abs(C[i]-C[i-1])))
+  
+#  print(dp[0][0])
+#  print(dp[1][0])
+  for i in range(1,M+1):
+    for j in range(i+1,M+1):
+      ans=1000*1000*1000*1000
+
+      if(j>i+1):
+        ans=min(ans,dp[j-1][i]+min(abs(C[j]-C[j-1]),abs(N-abs(C[j]-C[j-1]))))
+      else:
+        for l in range(i):
+          ans=min(ans,dp[j-1][l]+min(abs(C[j]-C[l]),abs(N-abs(C[j]-C[l]))))
+      dp[j][i]=ans
+   #   else:
+    #    dp[j][i]=dp[i][i-1]+min(abs(C[i+1]-C[i-1]),abs(N-abs(C[i+1]-C[i-1])))
+  ans=1000*1000*1000*1000
+  for i in range(M):
+    ans=min(ans,dp[M][i])
+  
+#  print(dp)   
+  return ans
